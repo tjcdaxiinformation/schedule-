@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一天行程 - 使人有盼望的神</title>
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --deep-blue: #1A2A6C;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .canvas-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-top: 8px solid var(--primary-gold);
+        }
+
+        .header {
+            background-color: var(--deep-blue);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+        .header p { margin: 10px 0 0; opacity: 0.9; font-weight: 300; }
+
+        .theme-box {
+            background: #fffbe6;
+            margin: 20px;
+            padding: 15px;
+            border-left: 5px solid var(--primary-gold);
+            text-align: center;
+        }
+
+        .theme-title {
+            color: #b45309;
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .timeline {
+            padding: 20px;
+        }
+
+        .event {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 10px;
+        }
+
+        .time {
+            min-width: 110px;
+            font-weight: bold;
+            color: var(--deep-blue);
+        }
+
+        .activity {
+            flex-grow: 1;
+        }
+
+        .highlight {
+            color: #e63946;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="canvas-container">
+    <div class="header">
+        [span_0](start_span)<h1>4/23 行程安排[span_0](end_span)</h1>
+        <p>第一天行程表</p>
+    </div>
+
+    <div class="theme-box">
+        <span style="font-size: 14px; color: #666;">今日佈道主題</span>
+        <span class="theme-title">『使人有盼望的神』</span>
+    </div>
+
+    <div class="timeline">
+        <div class="event">
+            <div class="time">06:40 - 07:00</div>
+            [span_1](start_span)<div class="activity">早禱 (配合團契)[span_1](end_span)</div>
+        </div>
+        <div class="event">
+            <div class="time">07:00 - 08:00</div>
+            [span_2](start_span)<div class="activity">早餐[span_2](end_span)</div>
+        </div>
+        <div class="event">
+            <div class="time">09:00 - 14:00</div>
+            [span_3](start_span)<div class="activity" style="color: #2a9d8f; font-weight: bold;">訪問行程[span_3](end_span)</div>
+        </div>
+        <div class="event">
+            <div class="time">17:00 - 17:30</div>
+            [span_4](start_span)<div class="activity">全體禱告會[span_4](end_span)</div>
+        </div>
+        <div class="event">
+            <div class="time">17:30 - 18:30</div>
+            [span_5](start_span)<div class="activity">晚餐[span_5](end_span)</div>
+        </div>
+        <div class="event">
+            <div class="time">19:00 - 19:30</div>
+            [span_6](start_span)<div class="activity">禱告與詩頌[span_6](end_span)</div>
+        </div>
+        <div class="event">
+            <div class="time">19:30 - 21:00</div>
+            <div class="activity">
+                [span_7](start_span)<span class="highlight">第一天佈道會 (含禱告)[span_7](end_span)</span><br>
+                <small>主題：使人有盼望的神</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 聖工團隊 靈命長進
+    </div>
+</div>
+
+</body>
+</html>
