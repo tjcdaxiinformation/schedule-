@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4/23 佈道會行程 - 使人有盼望的神</title>
+    <title>4/23 佈道會時序畫布</title>
     <style>
         :root {
             --primary-gold: #D4AF37;
             --deep-blue: #1A2A6C;
             --accent-red: #e63946;
-            --bg-color: #f8f9fa;
+            --line-color: #e0e0e0;
+            --bg-color: #f4f7f6;
         }
 
         body {
@@ -21,155 +22,188 @@
             padding: 20px;
         }
 
-        .canvas-container {
+        .canvas-card {
             width: 100%;
-            max-width: 600px;
+            max-width: 550px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
             overflow: hidden;
-            border-top: 12px solid var(--primary-gold);
+            position: relative;
         }
 
+        /* 頂部裝飾 */
         .header {
             background-color: var(--deep-blue);
             color: white;
             padding: 40px 20px;
             text-align: center;
+            border-bottom: 6px solid var(--primary-gold);
         }
 
         .header h1 { margin: 0; font-size: 28px; letter-spacing: 4px; }
-        .header .date-info { margin-top: 8px; font-size: 18px; opacity: 0.9; }
+        .header p { margin: 10px 0 0; opacity: 0.8; font-size: 18px; }
 
-        .theme-section {
-            background: linear-gradient(135deg, #fffbe6 0%, #fff9db 100%);
-            margin: 25px;
-            padding: 40px 20px;
-            border: 2px solid var(--primary-gold);
-            border-radius: 15px;
+        /* 強化主題區塊 */
+        .theme-container {
+            padding: 30px 20px;
             text-align: center;
+            background: #fffdf2;
         }
 
-        .theme-label {
-            font-size: 18px;
-            color: #856404;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        .theme-title {
-            color: var(--deep-blue);
-            font-size: 46px;
-            font-weight: 900;
+        .theme-label { font-size: 16px; color: #856404; font-weight: bold; display: block; margin-bottom: 8px; }
+        .theme-title { 
+            font-size: 44px; 
+            font-weight: 900; 
+            color: var(--deep-blue); 
             line-height: 1.2;
+            margin: 10px 0;
         }
-
-        .choir-info {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #444;
-            font-weight: bold;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-            padding-top: 15px;
+        .choir-tag {
             display: inline-block;
+            background: var(--primary-gold);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
         }
 
-        .timeline { padding: 10px 35px 30px; }
-
-        .event {
-            display: flex;
-            padding: 18px 0;
-            border-bottom: 1px solid #eee;
+        /* 垂直時間軸優化 */
+        .timeline-section {
+            padding: 40px 30px;
+            position: relative;
         }
 
-        .time {
-            min-width: 115px;
-            font-size: 19px;
+        /* 垂直線 */
+        .timeline-section::before {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 40px;
+            bottom: 40px;
+            width: 3px;
+            background: var(--line-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 30px;
+        }
+
+        /* 時間圓點 */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-gold);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--line-color);
+            z-index: 2;
+        }
+
+        .time-label {
+            font-size: 16px;
             font-weight: 800;
             color: var(--deep-blue);
+            margin-bottom: 4px;
+            display: block;
         }
 
-        .activity { font-size: 19px; flex-grow: 1; color: #333; }
+        .activity-text {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.5;
+        }
 
-        .highlight-event {
-            background-color: #fff5f5;
-            border-radius: 10px;
+        /* 重點行程樣式 */
+        .special-item {
+            background: #fff5f5;
             padding: 15px;
-            border-left: 5px solid var(--accent-red);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-red);
         }
 
+        /* 頁尾資訊 */
         .footer {
-            background-color: #f1f3f5;
+            background: #f8f9fa;
+            padding: 30px;
             text-align: center;
-            padding: 25px;
             font-size: 14px;
             color: #666;
-            line-height: 1.8;
+            border-top: 1px solid #eee;
         }
 
+        .footer b { color: var(--deep-blue); }
+
         @media (max-width: 480px) {
-            .theme-title { font-size: 34px; }
-            .time { min-width: 95px; font-size: 17px; }
-            .activity { font-size: 17px; }
+            .theme-title { font-size: 32px; }
+            .timeline-section { padding: 30px 20px; }
+            .timeline-section::before { left: 25px; }
+            .timeline-item::after { left: -10px; }
         }
     </style>
 </head>
 <body>
 
-<div class="canvas-container">
+<div class="canvas-card">
     <div class="header">
         <h1>4/23 佈道會行程</h1>
-        <div class="date-info">第一天行程安排</div>
+        <p>使人有盼望的神 - 第一天</p>
     </div>
 
-    <div class="theme-section">
-        <span class="theme-label">今日佈道主題</span>
-        <span class="theme-title">『使人有盼望的神』</span>
-        <div class="choir-info">🎵 獻詩詩班：大溪學生團契</div>
+    <div class="theme-container">
+        <span class="theme-label">TODAY'S THEME</span>
+        <div class="theme-title">『使人有盼望的神』</div>
+        <div class="choir-tag">🎵 獻詩：大溪學生團契</div>
     </div>
 
-    <div class="timeline">
-        <div class="event">
-            <div class="time">06:40 - 07:00</div>
-            <div class="activity">早禱 (配合團契)</div>
+    <div class="timeline-section">
+        <div class="timeline-item">
+            <span class="time-label">06:40 - 07:00</span>
+            <div class="activity-text">早禱 (配合團契)</div>
         </div>
-        <div class="event">
-            <div class="time">07:00 - 08:00</div>
-            <div class="activity">早餐</div>
+
+        <div class="timeline-item">
+            <span class="time-label">07:00 - 08:00</span>
+            <div class="activity-text">早餐</div>
         </div>
-        <div class="event">
-            <div class="time" style="color: #0d9488;">09:00 - 14:00</div>
-            <div class="activity" style="color: #0d9488; font-weight: bold;">訪問行程</div>
+
+        <div class="timeline-item">
+            <span class="time-label" style="color: #0d9488;">09:00 - 14:00</span>
+            <div class="activity-text" style="color: #0d9488; font-weight: bold;">對外訪問行程</div>
         </div>
-        <div class="event">
-            <div class="time">17:00 - 17:30</div>
-            <div class="activity">全體禱告會</div>
+
+        <div class="timeline-item">
+            <span class="time-label">17:00 - 18:30</span>
+            <div class="activity-text">全體禱告會 ➔ 晚餐時間</div>
         </div>
-        <div class="event">
-            <div class="time">17:30 - 18:30</div>
-            <div class="activity">晚餐</div>
+
+        <div class="timeline-item">
+            <span class="time-label">19:00 - 19:30</span>
+            <div class="activity-text">晚間預備：禱告與詩頌</div>
         </div>
-        <div class="event">
-            <div class="time">19:00 - 19:20</div>
-            <div class="activity">禱告</div>
-        </div>
-        <div class="event">
-            <div class="time">19:20 - 19:30</div>
-            <div class="activity">詩頌</div>
-        </div>
-        <div class="event highlight-event" style="border-bottom: none; margin-top: 10px;">
-            <div class="time">19:30 - 21:00</div>
-            <div class="activity">
-                <b style="color: var(--accent-red); font-size: 21px;">第一天佈道會 (含禱告)</b><br>
-                <span style="font-size: 16px; color: #555;">主題：使人有盼望的神</span>
+
+        <div class="timeline-item">
+            <div class="special-item">
+                <span class="time-label" style="color: var(--accent-red);">19:30 - 21:00</span>
+                <div class="activity-text">
+                    <b style="font-size: 20px;">第一天佈道會 (含禱告)</b><br>
+                    <small>講題：使人有盼望的神</small>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="footer">
         <b>發行單位：TJC大溪教會職務會 製作</b><br>
-        願神祝福今日的腳蹤與聖工
+        願神祝福今日的聖工與腳蹤
     </div>
 </div>
 
