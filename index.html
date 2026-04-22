@@ -31,7 +31,6 @@
             border-top: 12px solid var(--primary-gold);
         }
 
-        /* 標頭 */
         .header {
             background-color: var(--deep-blue);
             color: white;
@@ -42,7 +41,6 @@
         .header h1 { margin: 0; font-size: 28px; letter-spacing: 4px; }
         .header .date-info { margin-top: 8px; font-size: 18px; opacity: 0.9; }
 
-        /* 主題區塊：強化增大 */
         .theme-section {
             background: linear-gradient(135deg, #fffbe6 0%, #fff9db 100%);
             margin: 25px;
@@ -50,7 +48,6 @@
             border: 2px solid var(--primary-gold);
             border-radius: 15px;
             text-align: center;
-            position: relative;
         }
 
         .theme-label {
@@ -59,15 +56,13 @@
             font-weight: bold;
             display: block;
             margin-bottom: 15px;
-            letter-spacing: 2px;
         }
 
         .theme-title {
             color: var(--deep-blue);
-            font-size: 46px; /* 再次增大 */
+            font-size: 46px;
             font-weight: 900;
             line-height: 1.2;
-            text-shadow: 2px 2px 0px rgba(212, 175, 55, 0.2);
         }
 
         .choir-info {
@@ -80,7 +75,6 @@
             display: inline-block;
         }
 
-        /* 時序表 */
         .timeline { padding: 10px 35px 30px; }
 
         .event {
@@ -96,7 +90,7 @@
             color: var(--deep-blue);
         }
 
-        .activity { font-size: 19px; flex-grow: 1; }
+        .activity { font-size: 19px; flex-grow: 1; color: #333; }
 
         .highlight-event {
             background-color: #fff5f5;
@@ -105,7 +99,6 @@
             border-left: 5px solid var(--accent-red);
         }
 
-        /* 頁尾發行單位 */
         .footer {
             background-color: #f1f3f5;
             text-align: center;
@@ -114,8 +107,6 @@
             color: #666;
             line-height: 1.8;
         }
-
-        .footer b { color: var(--deep-blue); }
 
         @media (max-width: 480px) {
             .theme-title { font-size: 34px; }
@@ -135,44 +126,42 @@
     <div class="theme-section">
         <span class="theme-label">今日佈道主題</span>
         <span class="theme-title">『使人有盼望的神』</span>
-        <div class="choir-info">
-            🎵 獻詩詩班：大溪學生團契
-        </div>
+        <div class="choir-info">🎵 獻詩詩班：大溪學生團契</div>
     </div>
 
     <div class="timeline">
         <div class="event">
             <div class="time">06:40 - 07:00</div>
-            [span_0](start_span)<div class="activity">早禱 (配合團契)[span_0](end_span)</div>
+            <div class="activity">早禱 (配合團契)</div>
         </div>
         <div class="event">
             <div class="time">07:00 - 08:00</div>
-            [span_1](start_span)<div class="activity">早餐[span_1](end_span)</div>
+            <div class="activity">早餐</div>
         </div>
-        <div class="event" style="color: #2d6a4f;">
-            <div class="time">09:00 - 14:00</div>
-            [span_2](start_span)<div class="activity"><b>訪問行程</b>[span_2](end_span)</div>
+        <div class="event">
+            <div class="time" style="color: #0d9488;">09:00 - 14:00</div>
+            <div class="activity" style="color: #0d9488; font-weight: bold;">訪問行程</div>
         </div>
         <div class="event">
             <div class="time">17:00 - 17:30</div>
-            [span_3](start_span)<div class="activity">全體禱告會[span_3](end_span)</div>
+            <div class="activity">全體禱告會</div>
         </div>
         <div class="event">
             <div class="time">17:30 - 18:30</div>
-            [span_4](start_span)<div class="activity">晚餐[span_4](end_span)</div>
+            <div class="activity">晚餐</div>
         </div>
         <div class="event">
             <div class="time">19:00 - 19:20</div>
-            [span_5](start_span)<div class="activity">禱告[span_5](end_span)</div>
+            <div class="activity">禱告</div>
         </div>
         <div class="event">
             <div class="time">19:20 - 19:30</div>
-            [span_6](start_span)<div class="activity">詩頌[span_6](end_span)</div>
+            <div class="activity">詩頌</div>
         </div>
         <div class="event highlight-event" style="border-bottom: none; margin-top: 10px;">
             <div class="time">19:30 - 21:00</div>
             <div class="activity">
-                [span_7](start_span)<b style="color: var(--accent-red); font-size: 21px;">第一天佈道會 (含禱告)</b>[span_7](end_span)<br>
+                <b style="color: var(--accent-red); font-size: 21px;">第一天佈道會 (含禱告)</b><br>
                 <span style="font-size: 16px; color: #555;">主題：使人有盼望的神</span>
             </div>
         </div>
