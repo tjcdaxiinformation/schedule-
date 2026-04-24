@@ -1,211 +1,420 @@
+[slides]
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4/23 佈道會時序畫布</title>
+    <title>靈恩會第一天行程</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root {
-            --primary-gold: #D4AF37;
-            --deep-blue: #1A2A6C;
-            --accent-red: #e63946;
-            --line-color: #e0e0e0;
-            --bg-color: #f4f7f6;
-        }
-
+        /* CORE DESIGN PRINCIPLES & RESET */
+        * { box-sizing: border-box; }
         body {
-            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
-            background-color: var(--bg-color);
+            background-color: #f1f5f9;
+            display: grid;
+            gap: 40px;
+            grid-template-columns: 1fr;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
+            padding: 40px 0;
+            place-items: center;
         }
 
-        .canvas-card {
-            width: 100%;
-            max-width: 550px;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #FDFCF0; /* Cream Background */
+            position: relative;
             overflow: hidden;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            font-family: 'Noto Sans TC', sans-serif;
+            border: 1px solid #e2e8f0;
         }
 
-        /* 頂部裝飾 */
-        .header {
-            background-color: var(--deep-blue);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 6px solid var(--primary-gold);
-        }
-
-        .header h1 { margin: 0; font-size: 28px; letter-spacing: 4px; }
-        .header p { margin: 10px 0 0; opacity: 0.8; font-size: 18px; }
-
-        /* 強化主題區塊 */
-        .theme-container {
-            padding: 30px 20px;
-            text-align: center;
-            background: #fffdf2;
-        }
-
-        .theme-label { font-size: 16px; color: #856404; font-weight: bold; display: block; margin-bottom: 8px; }
-        .theme-title { 
-            font-size: 44px; 
-            font-weight: 900; 
-            color: var(--deep-blue); 
-            line-height: 1.2;
-            margin: 10px 0;
-        }
-        .choir-tag {
-            display: inline-block;
-            background: var(--primary-gold);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 10px;
-        }
-
-        /* 垂直時間軸優化 */
-        .timeline-section {
-            padding: 40px 30px;
-            position: relative;
-        }
-
-        /* 垂直線 */
-        .timeline-section::before {
+        /* ABSTRACT BACKGROUND SHAPES for visual interest */
+        .slide-container::before {
             content: '';
             position: absolute;
-            left: 35px;
-            top: 40px;
-            bottom: 40px;
-            width: 3px;
-            background: var(--line-color);
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            z-index: 0;
         }
 
-        .timeline-item {
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 30px;
-        }
-
-        /* 時間圓點 */
-        .timeline-item::after {
+        .slide-container::after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary-gold);
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px var(--line-color);
+            bottom: 20px;
+            left: 60px;
+            width: 100px;
+            height: 4px;
+            background-color: #D4AF37;
+            z-index: 1;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 { 
+            font-family: 'Noto Serif TC', serif; 
+            margin: 0; 
+            color: #1A2A6C; 
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            margin-bottom: 40px;
+            text-align: left;
+            width: 100%;
+            border-left: 8px solid #D4AF37;
+            padding-left: 25px;
+            letter-spacing: 2px;
             z-index: 2;
         }
 
-        .time-label {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--deep-blue);
-            margin-bottom: 4px;
-            display: block;
+        p, li, td, th {
+            font-size: 22px;
+            line-height: 1.6;
+            color: #334155;
+            z-index: 2;
         }
 
-        .activity-text {
-            font-size: 18px;
-            color: #333;
-            line-height: 1.5;
+        .subtitle {
+            font-size: 28px;
+            color: #64748b;
+            margin-top: 10px;
         }
 
-        /* 重點行程樣式 */
-        .special-item {
-            background: #fff5f5;
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-red);
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            z-index: 2;
         }
 
-        /* 頁尾資訊 */
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
+        /* LAYOUTS */
+        .title-layout {
             text-align: center;
-            font-size: 14px;
-            color: #666;
-            border-top: 1px solid #eee;
+            justify-content: center;
+            height: 100%;
+        }
+        .title-layout h1 { font-size: 90px; margin-bottom: 20px; color: #1A2A6C; }
+        .title-layout .line { width: 150px; height: 6px; background: #D4AF37; margin: 30px auto; }
+
+        .section-title-layout {
+            text-align: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .section-title-layout h2 { font-size: 72px; color: #1A2A6C; position: relative; display: inline-block; }
+        .section-title-layout h2::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 100%; height: 4px; background: #D4AF37; }
+
+        .timeline-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            height: 300px;
+            margin-top: 50px;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #cbd5e1;
+            z-index: 0;
+        }
+        .timeline-item {
+            position: relative;
+            text-align: center;
+            width: 20%;
+            z-index: 1;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: #D4AF37;
+            border-radius: 50%;
+            border: 4px solid #fff;
+        }
+        .timeline-content { position: absolute; width: 250px; left: 50%; transform: translateX(-50%); }
+        .timeline-item:nth-child(even) .timeline-content { top: -120px; }
+        .timeline-item:nth-child(odd) .timeline-content { bottom: -120px; }
+        .timeline-content h3 { font-size: 28px; color: #1A2A6C; }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            width: 100%;
         }
 
-        .footer b { color: var(--deep-blue); }
+        .tiled-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+        }
+        .tile {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            border-bottom: 5px solid #D4AF37;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .tile .icon { font-size: 48px; color: #1A2A6C; margin-bottom: 20px; }
 
-        @media (max-width: 480px) {
-            .theme-title { font-size: 32px; }
-            .timeline-section { padding: 30px 20px; }
-            .timeline-section::before { left: 25px; }
-            .timeline-item::after { left: -10px; }
+        /* BLEED IMAGE RIGHT */
+        .bleed-image-layout {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0;
+            align-items: start;
+        }
+        .bleed-image-layout .content-container { padding: 60px; }
+        .bleed-image-layout .image-container { height: 100%; width: 100%; }
+        .bleed-image-layout img { width: 100%; height: 720px; object-fit: cover; }
+
+        .highlight-numbers-layout {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            align-items: center;
+            width: 100%;
+        }
+        .highlight-numbers-layout .number { font-size: 100px; font-weight: 700; color: #1A2A6C; font-family: 'Noto Serif TC'; }
+        .highlight-numbers-layout .label { font-size: 32px; color: #D4AF37; font-weight: 700; }
+
+        .table-layout table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .table-layout th { background: #1A2A6C; color: white; padding: 20px; text-align: left; }
+        .table-layout td { padding: 18px 20px; border-bottom: 1px solid #e2e8f0; }
+        .table-layout tr:nth-child(even) { background: #f8fafc; }
+
+        .qa-layout { text-align: center; justify-content: center; height: 100%; }
+        .qa-layout h2 { font-size: 80px; margin-bottom: 20px; }
+
+        /* FULL IMAGE */
+        .full-bg-image {
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .overlay {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 60px;
+            border-radius: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="canvas-card">
-    <div class="header">
-        <h1>4/23 佈道會行程</h1>
-        <p>使人有盼望的神 - 第一天</p>
+<!-- Slide 1: Title_Slide -->
+<div class="slide-container" id="slide1">
+    <div class="content-area title-layout">
+        <h1>靈恩會 第一天行程</h1>
+        <div class="line"></div>
+        <p class="subtitle">2026年4月25日 (六) | TJC大溪教會</p>
     </div>
+</div>
 
-    <div class="theme-container">
-        <span class="theme-label">TODAY'S THEME</span>
-        <div class="theme-title">『使人有盼望的神』</div>
-        <div class="choir-tag">🎵 獻詩：大溪學生團契</div>
+<!-- Slide 2: Section_Title -->
+<div class="slide-container" id="slide2">
+    <div class="content-area section-title-layout">
+        <h2>晨間與上午行程安排</h2>
+        <p class="subtitle">Morning Spiritual Preparation</p>
     </div>
+</div>
 
-    <div class="timeline-section">
-        <div class="timeline-item">
-            <span class="time-label">06:40 - 07:00</span>
-            <div class="activity-text">早禱 (配合團契)</div>
-        </div>
-
-        <div class="timeline-item">
-            <span class="time-label">07:00 - 08:00</span>
-            <div class="activity-text">早餐</div>
-        </div>
-
-        <div class="timeline-item">
-            <span class="time-label" style="color: #0d9488;">09:00 - 14:00</span>
-            <div class="activity-text" style="color: #0d9488; font-weight: bold;">對外訪問行程</div>
-        </div>
-
-        <div class="timeline-item">
-            <span class="time-label">17:00 - 18:30</span>
-            <div class="activity-text">全體禱告會 ➔ 晚餐時間</div>
-        </div>
-
-        <div class="timeline-item">
-            <span class="time-label">19:00 - 19:30</span>
-            <div class="activity-text">晚間預備：禱告與詩頌</div>
-        </div>
-
-        <div class="timeline-item">
-            <div class="special-item">
-                <span class="time-label" style="color: var(--accent-red);">19:30 - 21:00</span>
-                <div class="activity-text">
-                    <b style="font-size: 20px;">第一天佈道會 (含禱告)</b><br>
-                    <small>講題：使人有盼望的神</small>
+<!-- Slide 3: Timeline -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">清晨靈修與早餐</h2>
+    <div class="content-area">
+        <div class="timeline-layout">
+            <div class="timeline-line"></div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>07:30 - 08:00</h3>
+                    <p>早禱<br><strong>鍾霖恩 執事</strong></p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>08:00 - 08:30</h3>
+                    <p>活力早餐</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>09:30 - 09:50</h3>
+                    <p>預備心禱告</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="footer">
-        <b>發行單位：TJC大溪教會職務會 製作</b><br>
-        願神祝福今日的聖工與腳蹤
+<!-- Slide 4: Bleed_Image_Right -->
+<div class="slide-container bleed-image-layout" id="slide4">
+    <div class="content-container">
+        <h2 class="slide-title">安息日證道</h2>
+        <div class="content-area">
+            <div style="padding-top: 20px;">
+                <h3 style="color: #1A2A6C; font-size: 32px; margin-bottom: 20px;">上午靈性筵席</h3>
+                <p><strong>09:50~10:00</strong> 詩頌讚美</p>
+                <p><strong>10:00~11:30</strong> 安息日暨靈恩會證道 (含禱告)</p>
+                <p style="margin-top: 20px; font-style: italic;">求聖靈帶領講員與聽眾，同領生命靈糧。</p>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+        <img src="http://googleusercontent.com/image_collection/image_retrieval/12496102940956547747" alt="Church Interior">
+    </div>
+</div>
+
+<!-- Slide 5: Section_Title -->
+<div class="slide-container" id="slide5">
+    <div class="content-area section-title-layout">
+        <h2>下午行程：證道與洗禮</h2>
+        <p class="subtitle">Afternoon Grace and Baptism</p>
+    </div>
+</div>
+
+<!-- Slide 6: Two_Column_Tiled_Text -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">午間行程概要</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div style="background: #fff; padding: 40px; border-radius: 15px; border-left: 6px solid #D4AF37;">
+                <h3>午餐與休息</h3>
+                <p><strong>11:30~13:30</strong></p>
+                <p>在主裡團契，享用愛筵，稍事休息重新得力。</p>
+            </div>
+            <div style="background: #fff; padding: 40px; border-radius: 15px; border-left: 6px solid #1A2A6C;">
+                <h3>證道聚會</h3>
+                <p><strong>13:30~13:50</strong> 禱告</p>
+                <p><strong>13:50~14:00</strong> 詩頌</p>
+                <p><strong>14:00~15:30</strong> 安息日暨靈恩會證道</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Highlighted_Numbers -->
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">神聖的洗禮</h2>
+    <div class="content-area">
+        <div class="highlight-numbers-layout">
+            <div>
+                <div class="number">16:00</div>
+                <div class="label">洗禮大典</div>
+            </div>
+            <div style="padding-left: 40px;">
+                <h3>主領：梁秀娟</h3>
+                <p>地點：指定洗禮場地</p>
+                <p>時間：16:00 ~ 17:30</p>
+                <p style="margin-top: 20px;">這是罪得赦免、重生歸主的聖禮。讓我們以敬虔的心一同見證恩典的時刻。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Section_Title -->
+<div class="slide-container" id="slide8">
+    <div class="content-area section-title-layout">
+        <h2>晚間行程：佈道會</h2>
+        <p class="subtitle">Evening Evangelical Meeting</p>
+    </div>
+</div>
+
+<!-- Slide 9: Image_Right_Text_Left -->
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">靈恩會 第三天佈道會</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3 style="margin-top: 20px;">福音盛宴</h3>
+                <p><strong>17:30~18:30</strong> 晚餐時間</p>
+                <p><strong>19:00~19:20</strong> 晚間禱告</p>
+                <p><strong>19:20~19:30</strong> 詩頌讚美</p>
+                <p style="background: #D4AF37; color: white; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <strong>19:30~21:00</strong> 第三天佈道會含禱告
+                </p>
+            </div>
+            <div style="height: 400px; border-radius: 15px; overflow: hidden; border: 4px solid #1A2A6C;">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/14127830628478720863" alt="Choir" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: Table -->
+<div class="slide-container" id="slide10">
+    <h2 class="slide-title">4/25 (六) 行程總覽表</h2>
+    <div class="content-area">
+        <div class="table-layout">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間段</th>
+                        <th>行程項目</th>
+                        <th>負責/備註</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>07:30 - 08:30</td><td>早禱、早餐</td><td>鍾霖恩執事</td></tr>
+                    <tr><td>09:30 - 11:30</td><td>證道、詩頌</td><td>安息日暨靈恩會</td></tr>
+                    <tr><td>11:30 - 13:30</td><td>午餐、休息</td><td>-</td></tr>
+                    <tr><td>13:30 - 15:30</td><td>證道聚會</td><td>含詩頌與禱告</td></tr>
+                    <tr><td>16:00 - 17:30</td><td>洗禮</td><td>梁秀娟主領</td></tr>
+                    <tr><td>19:00 - 21:00</td><td>第三天佈道會</td><td>含詩頌與禱告</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Full_Background_Image -->
+<div class="slide-container full-bg-image" id="slide11" style="background-image: linear-gradient(rgba(26, 42, 108, 0.4), rgba(26, 42, 108, 0.4)), url('http://googleusercontent.com/image_collection/image_retrieval/1813789302607294116');">
+    <div class="overlay">
+        <h2 style="font-size: 64px; color: #1A2A6C;">使人有盼望的神</h2>
+        <p style="font-size: 28px; margin-top: 20px;">「願大能的主充滿你們的心，使你們在聖靈裡大有盼望。」</p>
+    </div>
+</div>
+
+<!-- Slide 12: Q&A -->
+<div class="slide-container" id="slide12">
+    <div class="content-area qa-layout">
+        <h2>願神祝福今日聖工</h2>
+        <div style="width: 100px; height: 5px; background: #D4AF37; margin: 30px auto;"></div>
+        <p class="subtitle">如有行程變更，請依現場報告為準</p>
+        <p style="margin-top: 40px; color: #1A2A6C; font-weight: bold;">TJC大溪教會 職務會 敬啟</p>
     </div>
 </div>
 
 </body>
 </html>
+
