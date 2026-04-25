@@ -1,320 +1,213 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>靈恩會第一天行程 - 簡報投影片</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        /* 1. CORE PRESENTATION SETUP */
-        * { box-sizing: border-box; }
-        body {
-            background-color: #1a1a1a;
-            display: grid;
-            gap: 40px;
-            grid-template-columns: 1fr;
-            margin: 0;
-            padding: 40px 0;
-            place-items: center;
-        }
+import React, { useState } from 'react';
+import { 
+  Calendar, 
+  Clock, 
+  MapPin, 
+  Heart, 
+  Camera, 
+  Music, 
+  ChevronRight, 
+  ChevronLeft, 
+  Info,
+  Users,
+  CheckCircle2,
+  Sparkles
+} from 'lucide-react';
 
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #FDFCF0;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            padding: 60px;
-            font-family: 'Noto Sans TC', sans-serif;
-            color: #334155;
-        }
+const App = () => {
+  const [activeDay, setActiveDay] = useState(0);
 
-        /* 2. CONSISTENT TYPOGRAPHY */
-        h1, h2, h3 { 
-            font-family: 'Noto Serif TC', serif; 
-            margin: 0; 
-            color: #1A2A6C; 
-        }
+  const scheduleData = [
+    {
+      date: '4/23',
+      weekday: '星期四',
+      title: '第一天：開端與佈道',
+      events: [
+        { time: '06:40', text: '早禱 (配合團契)', type: 'prayer' },
+        { time: '09:00', text: '訪問', type: 'activity' },
+        { time: '17:00', text: '全體禱告會', type: 'prayer' },
+        { time: '17:30', text: '晚餐時間', type: 'meal' },
+        { time: '19:00', text: '會前禱告 / 詩頌', type: 'worship' },
+        { time: '19:30', text: '第一天佈道會 (含禱告)', type: 'main', highlight: true },
+      ]
+    },
+    {
+      date: '4/24',
+      weekday: '星期五',
+      title: '第二天：進深與佈道',
+      events: [
+        { time: '06:40', text: '早禱 (配合團契)', type: 'prayer' },
+        { time: '09:00', text: '訪問', type: 'activity' },
+        { time: '17:00', text: '全體禱告會', type: 'prayer' },
+        { time: '17:30', text: '晚餐時間', type: 'meal' },
+        { time: '19:00', text: '會前禱告 / 詩頌', type: 'worship' },
+        { time: '19:30', text: '第二天佈道會 (含禱告)', type: 'main', highlight: true },
+      ]
+    },
+    {
+      date: '4/25',
+      weekday: '星期六',
+      title: '第三天：安息日與洗禮',
+      events: [
+        { time: '07:30', text: '早禱 (鍾霖恩執事)', type: 'prayer' },
+        { time: '09:50', text: '詩頌與禱告', type: 'worship' },
+        { time: '10:00', text: '安息日暨靈恩會證道', type: 'main' },
+        { time: '11:30', text: '午餐與休息', type: 'meal' },
+        { time: '13:50', text: '會後詩頌', type: 'worship' },
+        { time: '14:00', text: '安息日暨靈恩會證道', type: 'main' },
+        { time: '16:00', text: '洗禮 (梁秀娟主領)', type: 'sacrament', highlight: true },
+        { time: '17:30', text: '晚餐時間', type: 'meal' },
+        { time: '19:30', text: '第三天佈道會 (含禱告)', type: 'main', highlight: true },
+      ]
+    },
+    {
+      date: '4/26',
+      weekday: '星期日',
+      title: '第四天：靈恩會暨聖禮(洗腳禮、聖餐禮)',
+      events: [
+        { time: '07:30', text: '早禱 (沈育丞神學生)', type: 'prayer' },
+        { time: '09:30', text: '證道：淺談靈魂 (胡明正執事)', type: 'main' },
+        { time: '10:30', text: '職務會 / 準備聖餐，獻詩：傳道、新舊任負責人', type: 'activity' },
+        { time: '10:50', text: '聖禮 (洗腳禮、聖餐)', type: 'sacrament', highlight: true },
+        { time: '13:00', text: '大合照 / 感恩奉獻', type: 'activity', highlight: true },
+        { time: '14:00', text: '午餐與大掃除', type: 'meal' },
+      ]
+    }
+  ];
 
-        .slide-title {
-            font-size: 44px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            text-align: left;
-            width: 100%;
-            border-left: 10px solid #D4AF37;
-            padding-left: 20px;
-            line-height: 1.2;
-            text-transform: uppercase;
-        }
+  const getTypeStyle = (type, highlight) => {
+    if (highlight) return 'bg-amber-50 border-l-4 border-amber-500 text-amber-900 font-bold';
+    switch (type) {
+      case 'prayer': return 'bg-blue-50 text-blue-700 border-l-4 border-blue-300';
+      case 'meal': return 'bg-slate-50 text-slate-400 italic';
+      case 'sacrament': return 'bg-red-50 text-red-700 border-l-4 border-red-500 font-bold';
+      default: return 'bg-white text-slate-700 border border-slate-100';
+    }
+  };
 
-        p, li, td, th { font-size: 20px; line-height: 1.6; }
-        .subtitle { font-size: 28px; color: #64748b; margin-top: 10px; }
+  const getIcon = (text, type) => {
+    if (text.includes('獻詩')) return <Music size={18} className="text-amber-600" />;
+    if (text.includes('大合照')) return <Camera size={18} className="text-slate-600" />;
+    if (type === 'prayer') return <Heart size={18} className="text-blue-500" />;
+    if (type === 'sacrament') return <CheckCircle2 size={18} className="text-red-500" />;
+    if (type === 'activity') return <Users size={18} className="text-slate-500" />;
+    return <Clock size={18} className="text-slate-400" />;
+  };
 
-        .content-area {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-        }
-
-        /* 3. DECORATIVE ELEMENTS (CONSISTENCY) */
-        .slide-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
-            z-index: 0;
-        }
-
-        /* 4. LAYOUTS */
-        .title-layout { text-align: center; justify-content: center; height: 100%; }
-        .title-layout h1 { font-size: 84px; line-height: 1.1; margin-bottom: 20px; }
-        .title-layout .divider { width: 120px; height: 6px; background: #D4AF37; margin: 30px auto; }
-
-        .section-title-layout { text-align: center; justify-content: center; height: 100%; }
-        .section-title-layout h2 { font-size: 72px; margin-bottom: 10px; }
-        .section-title-layout hr { width: 80px; height: 4px; background: #D4AF37; border: none; margin: 30px auto; }
-
-        .timeline-layout { display: flex; justify-content: space-between; position: relative; margin-top: 50px; }
-        .timeline-line { position: absolute; top: 32px; left: 0; width: 100%; height: 2px; background: #D4AF37; opacity: 0.3; }
-        .timeline-item { width: 30%; text-align: center; position: relative; }
-        .timeline-dot { width: 16px; height: 16px; background: #D4AF37; border-radius: 50%; margin: 25px auto; position: relative; z-index: 2; border: 3px solid #FDFCF0; }
-        .timeline-item h3 { font-size: 24px; color: #1A2A6C; margin-bottom: 5px; }
-
-        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; width: 100%; }
-        .tile { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 6px solid #D4AF37; height: 100%; }
-
-        .highlight-number { font-size: 110px; font-weight: 700; color: #1A2A6C; line-height: 1; }
-        .highlight-label { font-size: 32px; color: #D4AF37; font-weight: 700; margin-top: 10px; }
-
-        .table-layout table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .table-layout th { background: #1A2A6C; color: white; padding: 20px; text-align: left; font-size: 22px; }
-        .table-layout td { padding: 18px 20px; border-bottom: 1px solid #e2e8f0; font-size: 19px; }
-        .table-layout tr:nth-child(even) { background: #f8fafc; }
-
-        .bleed-image-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; align-items: start; }
-        .bleed-image-layout .content-side { padding: 60px; }
-        .bleed-image-layout img { height: 720px; width: 100%; object-fit: cover; }
-
-        .rounded-image { width: 450px; height: 450px; border-radius: 50%; border: 10px solid #D4AF37; object-fit: cover; }
+  return (
+    <div className="flex flex-col min-h-screen bg-slate-100 items-center font-sans">
+      <div className="w-full max-w-[450px] bg-white min-h-screen shadow-2xl flex flex-col relative border-x border-slate-200">
         
-        .huge-title { font-size: 56px; font-weight: 900; color: #e63946; letter-spacing: 2px; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-    </style>
-</head>
-<body>
-
-<!-- Slide 1: Title Slide -->
-<div class="slide-container" id="slide1">
-    <div class="content-area title-layout">
-        <h1>靈恩會第一天行程</h1>
-        <div class="divider"></div>
-        <p class="subtitle">（暨第三天佈道會）</p>
-        <p style="margin-top: 40px; font-size: 24px; color: #475569;">2026年4月25日 (六) | 真耶穌教會 大溪教會</p>
-    </div>
-</div>
-
-<!-- Slide 2: Section Title -->
-<div class="slide-container" id="slide2">
-    <div class="content-area section-title-layout">
-        <hr>
-        <h2>晨間行程安排</h2>
-        <p class="subtitle">Morning Spiritual Preparation</p>
-    </div>
-</div>
-
-<!-- Slide 3: Timeline Layout -->
-<div class="slide-container" id="slide3">
-    <h2 class="slide-title">清晨靈修與早餐</h2>
-    <div class="content-area">
-        <div class="timeline-layout">
-            <div class="timeline-line"></div>
-            <div class="timeline-item">
-                <h3>07:30 - 08:00</h3>
-                <div class="timeline-dot"></div>
-                <p><strong>早禱</strong><br>鍾霖恩 執事</p>
+        {/* Header Section */}
+        <header className="bg-[#1a2a3a] text-white p-8 text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16"></div>
+          <div className="relative z-10">
+            <h4 className="text-amber-400 text-xs font-bold tracking-[0.2em] mb-2">TRUE JESUS CHURCH</h4>
+            <h1 className="text-2xl font-black mb-1">真耶穌教會 大溪教會</h1>
+            <h2 className="text-lg font-light text-slate-300">115年上半年 靈恩佈道會</h2>
+            <div className="flex items-center justify-center mt-4 text-xs text-slate-300 bg-white/10 py-2 px-3 rounded-lg backdrop-blur-sm border border-white/5">
+              <MapPin size={12} className="mr-2 text-amber-400" />
+              <span>桃園市大溪區民權東路185巷31號</span>
             </div>
-            <div class="timeline-item">
-                <h3>08:00 - 08:30</h3>
-                <div class="timeline-dot"></div>
-                <p><strong>活力早餐</strong><br>在主裡共餐</p>
-            </div>
-            <div class="timeline-item">
-                <h3>09:30 - 09:50</h3>
-                <div class="timeline-dot"></div>
-                <p><strong>禱告</strong><br><span style="color:#D4AF37;">(祈求靈恩)</span></p>
-            </div>
-        </div>
-    </div>
-</div>
+          </div>
+        </header>
 
-<!-- Slide 4: Bleed Image Right -->
-<div class="slide-container bleed-image-layout" id="slide4">
-    <div class="content-side">
-        <h2 class="slide-title">上午靈恩會</h2>
-        <div class="content-area">
-            <div style="margin-top: 20px;">
-                <p><strong>09:50~10:00</strong> 詩頌讚美</p>
-                <p><strong>10:00~11:30</strong></p>
-                <h3 style="font-size: 32px; margin: 10px 0;">安息日暨靈恩會證道</h3>
-                <p>附註：含禱告 <span style="color:#D4AF37;">(祈求靈恩)</span></p>
-                <p style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px; font-style: italic;">
-                    主題：凡事感謝<br>講員：柯仲平傳道
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="image-side">
-        <img src="http://googleusercontent.com/image_collection/image_retrieval/17658898834596305922" alt="Sanctuary Interior">
-    </div>
-</div>
+        {/* Day Navigation */}
+        <nav className="flex sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-100 shadow-sm">
+          {scheduleData.map((day, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveDay(idx)}
+              className={`flex-1 py-4 text-center transition-all relative ${
+                activeDay === idx ? 'text-amber-600 font-bold' : 'text-slate-400'
+              }`}
+            >
+              <span className="text-[10px] block opacity-70 mb-0.5">{day.date}</span>
+              <span className="text-sm">Day {idx + 1}</span>
+              {activeDay === idx && (
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-amber-500 rounded-t-full"></div>
+              )}
+            </button>
+          ))}
+        </nav>
 
-<!-- Slide 5: Section Title -->
-<div class="slide-container" id="slide5">
-    <div class="content-area section-title-layout">
-        <hr>
-        <h2>下午行程：靈恩會第二節暨洗禮</h2>
-        <p class="subtitle">Afternoon Grace and Baptismal Sacrament</p>
-    </div>
-</div>
+        {/* Content Section */}
+        <main className="flex-1 p-5 pb-24 bg-white">
+          <div className="flex items-center mb-6">
+            <div className="bg-gradient-to-br from-amber-400 to-amber-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg shadow-amber-200">
+              {activeDay + 1}
+            </div>
+            <div className="ml-4">
+              <h3 className="text-xl font-black text-slate-800 tracking-tight leading-tight">
+                {scheduleData[activeDay].title}
+              </h3>
+              <p className="text-sm text-slate-500 font-medium">{scheduleData[activeDay].weekday}</p>
+            </div>
+          </div>
 
-<!-- Slide 6: Two Column Tiled Text -->
-<div class="slide-container" id="slide6">
-    <h2 class="slide-title">午間休息與會前預備</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div class="tile">
-                <h3>午餐與休息</h3>
-                <p><strong>11:30 - 13:30</strong></p>
-                <p>享用愛筵並在主裡安靜休息，預備下午屬靈的腳蹤。</p>
-            </div>
-            <div class="tile" style="border-top-color: #1A2A6C;">
-                <h3>會前禱告詩頌</h3>
-                <p><strong>13:30 - 14:00</strong></p>
-                <p>13:30~13:50 禱告 <span style="color:#D4AF37;">(祈求靈恩)</span></p>
-                <p>13:50~14:00 詩頌讚美</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Slide 7: Highlighted Numbers (Modified for Sermon) -->
-<div class="slide-container" id="slide7">
-    <h2 class="slide-title">下午靈恩會證道</h2>
-    <div class="content-area">
-        <div class="two-column" style="align-items: center;">
-            <div style="text-align: center;">
-                <div class="highlight-number">14:00</div>
-                <div class="highlight-label">安息日暨靈恩會證道</div>
-            </div>
-            <div style="border-left: 1px solid #e2e8f0; padding-left: 60px;">
-                <h3 style="font-size: 38px; margin-bottom: 15px;">證道主題：面對靈戰</h3>
-                <p><strong>講員：胡明正 執事</strong></p>
-                <p>時間：14:00 ~ 15:30 (含禱告)</p>
-                <p style="margin-top: 30px; color: #64748b; font-style: italic;">靠著聖靈的大能，穿戴神所賜的全副軍裝。</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Slide 8: Rounded Image and Text -->
-<div class="slide-container" id="slide8">
-    <h2 class="slide-title">赦罪成為新人的洗禮</h2>
-    <div class="content-area">
-        <div class="two-column" style="align-items: center;">
-            <div>
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/1785238353205080529" alt="Daxi Bridge Baptism Location" class="rounded-image">
-            </div>
-            <div style="padding-left: 20px;">
-                <h3 style="font-size: 42px; margin-bottom: 10px;">聖禮：洗禮</h3>
-                <p><strong>16:00 - 17:30</strong></p>
-                <p><strong>地點：大溪橋下洗禮場</strong></p>
-                <p><strong>主領：梁秀娟</strong></p>
-                <p style="margin-top: 30px; line-height: 1.8;">「你們各人要悔改，奉耶穌基督的名受洗，叫你們的罪得赦，就必領受所賜的聖靈。」(徒2:38)</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Slide 9: Section Title -->
-<div class="slide-container" id="slide9">
-    <div class="content-area section-title-layout">
-        <hr>
-        <h2>晚間行程：第三天佈道會</h2>
-        <p class="subtitle">Evening Evangelical Meeting</p>
-    </div>
-</div>
-
-<!-- Slide 10: Image Right Text Left -->
-<div class="slide-container" id="slide10">
-    <h2 class="slide-title">佈道大會盛宴</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                <div class="huge-title">使人有盼望的神</div>
-                <div style="margin-top: 25px;">
-                    <p><strong>17:30 - 18:30</strong> 晚餐時間</p>
-                    <p><strong>19:00 - 19:20</strong> 禱告 <span style="color:#D4AF37;">(祈求靈恩)</span></p>
-                    <p><strong>19:20 - 19:30</strong> 詩頌讚美</p>
-                    <div style="background: #1A2A6C; color: white; padding: 25px; border-radius: 10px; margin-top: 20px;">
-                        <p style="font-size: 24px; margin: 0;"><strong>19:30 - 21:00 第三天佈道會</strong></p>
-                        <p style="margin: 8px 0 0 0; font-size: 20px; font-weight: bold; color: #D4AF37;">講員：柯仲平 傳道</p>
-                        <p style="margin: 5px 0 0 0; font-size: 18px;">獻詩詩班：山佳教會(小詩班)</p>
-                    </div>
+          <div className="space-y-4">
+            {scheduleData[activeDay].events.map((event, i) => (
+              <div 
+                key={i} 
+                className={`flex items-center p-4 rounded-2xl transition-all shadow-sm active:scale-[0.98] ${getTypeStyle(event.type, event.highlight)}`}
+              >
+                <div className="w-16 font-mono text-sm opacity-60 font-bold border-r border-black/5 mr-4 shrink-0">
+                  {event.time}
                 </div>
+                <div className="flex-1 flex items-center gap-3">
+                  {getIcon(event.text, event.type)}
+                  <span className={`leading-snug ${event.highlight ? 'text-lg font-bold tracking-tight' : 'text-[15px]'}`}>
+                    {event.text}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Reminder Box */}
+          <div className="mt-8 bg-slate-50 rounded-3xl p-6 border border-slate-100 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-2 opacity-5">
+              <Sparkles size={48} />
             </div>
-            <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.1);">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/4481972032920931217" alt="Evangelical Choir" style="width: 100%; height: 100%; object-fit: cover;">
+            <div className="flex items-center gap-2 text-slate-800 font-bold mb-3">
+              <Info size={18} className="text-amber-500" />
+              <span className="text-base tracking-tight">會務特別提醒</span>
             </div>
-        </div>
-    </div>
-</div>
+            <p className="text-[13px] text-slate-600 leading-relaxed font-medium">
+              {activeDay === 3 
+                ? "本日 10:30 有重要獻詩，13:00 進行全體大合照與感恩奉獻。請弟兄姊妹穿著正式服裝，預備聖潔、自省的心領受聖餐。"
+                : "聚會期間請將手機轉為靜音或震動。提早 10 分鐘入座，安靜心靈迎接神的恩典。"}
+            </p>
+          </div>
+        </main>
 
-<!-- Slide 11: Table Layout -->
-<div class="slide-container" id="slide11">
-    <h2 class="slide-title">4/25 (六) 完整行程總覽表</h2>
-    <div class="content-area">
-        <div class="table-layout">
-            <table>
-                <thead>
-                    <tr>
-                        <th>時間</th>
-                        <th>行程項目</th>
-                        <th>負責人員 / 備註</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>07:30 - 08:30</td><td>早禱、早餐</td><td>鍾霖恩執事</td></tr>
-                    <tr><td>09:30 - 11:30</td><td>上午靈恩會 (證道、禱告)</td><td>柯仲平傳道 | (祈求靈恩)</td></tr>
-                    <tr><td>11:30 - 13:30</td><td>午餐、休息</td><td>-</td></tr>
-                    <tr><td>13:30 - 15:30</td><td>靈恩會第二節暨證道</td><td>胡明正執事 | (祈求靈恩)</td></tr>
-                    <tr><td>16:00 - 17:30</td><td>聖禮：洗禮</td><td>大溪橋下洗禮場 (梁秀娟)</td></tr>
-                    <tr><td>19:00 - 21:00</td><td>第三天佈道會 (含禱告)</td><td>柯仲平傳道 | 獻詩：山佳教會(小詩班)</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+        {/* Footer Section */}
+        <footer className="mt-auto p-8 bg-slate-900 text-center relative shrink-0">
+          <div className="w-12 h-1 bg-amber-500 mx-auto mb-4 rounded-full opacity-50"></div>
+          <p className="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-bold mb-2">115 SPRING CONVOCATION</p>
+          <p className="text-sm text-slate-300 italic font-serif">「全地都要向耶和華歌唱！」</p>
+          <p className="mt-4 text-[10px] text-slate-600 tracking-tighter">真耶穌教會 大溪教會 籌備小組 敬邀</p>
+        </footer>
 
-<!-- Slide 12: Q&A / Closing -->
-<div class="slide-container" id="slide12">
-    <div class="content-area title-layout">
-        <h2 style="font-size: 64px;">願神祝福今日聖工</h2>
-        <div class="divider" style="width: 80px;"></div>
-        <p class="subtitle" style="font-size: 24px; color: #1A2A6C;">使人有盼望的神，因信將諸般的喜樂平安充滿你們的心。</p>
-        <p style="margin-top: 60px; font-weight: bold; color: #475569;">發行單位：TJC大溪教會職務會 製作</p>
-    </div>
-</div>
+      </div>
 
-</body>
-</html>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        body { 
+          font-family: 'Noto Sans TC', sans-serif; 
+          margin: 0;
+          background-color: #f1f5f9;
+        }
+        main {
+          animation: slideUp 0.4s ease-out forwards;
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}} />
+    </div>
+  );
+};
+
+export default App;
